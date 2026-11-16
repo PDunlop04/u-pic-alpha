@@ -548,6 +548,60 @@
     .map-arrival-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
     .map-arrival-actions [hidden] { display: none; }
     .map-arrival-actions .button { min-height: 42px; }
+    .map-activity-button { font-size: 12px; }
+    .map-activity-button .activity-count { font-weight: 950; }
+    .activity-modal {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgb(10 32 56 / 58%);
+      backdrop-filter: blur(5px);
+    }
+    .activity-modal.open { display: flex; animation: appear .2s ease both; }
+    .activity-card {
+      position: relative;
+      width: min(620px, 100%);
+      max-height: min(88vh, 760px);
+      overflow: auto;
+      padding: 28px;
+      border: 1px solid #e6ecf4;
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: 0 22px 70px rgb(0 0 0 / 25%);
+    }
+    .activity-card h2 { margin: 0 42px 6px 0; color: var(--navy); font-size: 26px; font-weight: 950; letter-spacing: -.04em; }
+    .activity-eyebrow { margin: 0 0 18px; color: #788699; font-size: 12px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .activity-intro { color: #5e6f84; font-size: 14px; line-height: 1.55; }
+    .wallet-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .wallet-piece { display: grid; min-height: 105px; align-content: center; justify-items: center; gap: 5px; padding: 10px 6px; border: 1px solid #dfe7ef; border-radius: 14px; background: #f0f3f6; color: #788699; text-align: center; }
+    .wallet-piece.collected { border-color: #f0d477; background: #fff5d5; color: var(--navy); }
+    .wallet-piece-icon { font-size: 25px; filter: grayscale(1); opacity: .48; }
+    .wallet-piece.collected .wallet-piece-icon { filter: none; opacity: 1; }
+    .wallet-piece-name { font-size: 11px; font-weight: 850; line-height: 1.25; }
+    .activity-stat { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin: 16px 0 0; padding: 12px 14px; border-radius: 12px; background: #eef5fc; color: var(--navy); font-size: 13px; font-weight: 850; }
+    .quest-list { display: grid; gap: 9px; margin: 14px 0; padding: 0; list-style: none; }
+    .quest-list li { padding: 12px 14px; border: 1px solid #e5eaf0; border-radius: 12px; background: white; color: #64748a; font-size: 13px; line-height: 1.4; }
+    .quest-list li.done { border-color: #b7dfcc; background: #edf9f2; color: #26734d; font-weight: 800; }
+    .activity-feedback { min-height: 20px; margin: 10px 0 0; color: #65768a; font-size: 13px; line-height: 1.45; }
+    .activity-action { margin-top: 8px; }
+    .activity-action:disabled { opacity: .5; cursor: not-allowed; }
+    .treasure-clues { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .treasure-clue { display: grid; min-height: 86px; align-content: center; justify-items: center; gap: 5px; border-radius: 12px; background: linear-gradient(145deg, #fff1bd, #f8d98c); color: var(--navy); }
+    .treasure-clue span:first-child { font-size: 28px; }
+    .treasure-clue span:last-child { font-size: 10px; font-weight: 800; }
+    .treasure-slots, .treasure-keyboard, .trivia-choices { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+    .treasure-slot, .treasure-key { display: grid; width: 42px; height: 46px; place-items: center; border: 1px solid #d5deea; border-radius: 9px; background: white; color: var(--navy); font-size: 20px; font-weight: 900; cursor: pointer; }
+    .treasure-slot.filled { background: #eaf4ff; }
+    .treasure-key:disabled { opacity: .4; cursor: default; }
+    .trivia-choice { min-height: 45px; flex: 1 1 45%; padding: 9px 12px; border: 1px solid #d7e1eb; border-radius: 11px; background: white; color: var(--navy); font-size: 13px; font-weight: 800; cursor: pointer; }
+    .trivia-choice:hover:not(:disabled) { background: #eef5fc; }
+    .trivia-choice:disabled { opacity: .6; cursor: default; }
+    .near-miss { color: #266e9e !important; font-weight: 800; }
+    #game-page .letter-slot.correct-position { border-color: #37a56d; background: #e6f7ed; color: #17653d; }
     .building-facts { margin: -4px 0 18px; padding-left: 20px; color: #637287; font-size: 13px; line-height: 1.65; text-align: left; }
     .building-modal, .win-modal {
       position: fixed;
@@ -673,6 +727,9 @@
       .map-arrival { grid-template-columns: 1fr; gap: 12px; padding: 14px; }
       .map-arrival-actions { justify-content: stretch; }
       .map-arrival-actions .button { flex: 1 1 135px; }
+      .wallet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .activity-card { padding: 23px 18px; }
+      .treasure-clue { min-height: 72px; }
       .footer { width: calc(100% - 28px); }
       #game-page.page { padding: 0; }
       #game-page .game-shell { min-height: 100vh; padding: 0 12px 20px; border-right: 0; border-left: 0; border-radius: 0; }
@@ -685,6 +742,17 @@
       #game-page .fake-keyboard { gap: 7px; margin-top: 15px; }
       #game-page .toolbar { margin-top: 16px; }
       #game-page .tool-button { min-width: 135px; min-height: 45px; padding: 0 11px; font-size: 12px; }
+    }
+
+    @media (max-width: 760px) {
+      #map-page .map-arrival {
+        height: auto;
+        grid-template-columns: minmax(0, 1fr);
+        align-content: end;
+        gap: 8px;
+      }
+      #map-page .map-arrival > div:first-child { min-width: 0; }
+      #map-page .map-arrival-actions { justify-content: center; }
     }
 
     #map-page.page {
@@ -729,7 +797,9 @@
       box-shadow: none;
       transform: translateX(-50%);
       text-shadow: 0 1px 5px #fff, 0 0 10px #fff;
+      pointer-events: none;
     }
+    #map-page .map-arrival-actions { pointer-events: auto; }
     #map-page .map-arrival h2 { font-size: clamp(17px, 2vw, 22px); }
     #map-page .map-arrival p:not(.eyebrow) { font-size: 12px; }
     #map-page .map-arrival-actions .button { min-height: 42px; }
@@ -824,6 +894,10 @@
         <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-haspopup="true" aria-expanded="false">⋯</button>
         <div id="menu-panel" class="menu-panel" role="menu" hidden>
           <button type="button" role="menuitem" data-page="rules">How to play</button>
+          <button id="wallet-open" type="button" role="menuitem">Campus Wallet</button>
+          <button id="daily-quest-open" type="button" role="menuitem">Daily quests</button>
+          <button id="treasure-open" type="button" role="menuitem">Hidden treasures</button>
+          <button id="trivia-open" type="button" role="menuitem">Campus trivia</button>
           <button id="settings-open" type="button" role="menuitem">Settings · Audio</button>
           <button id="reset-map" class="reset-progress" type="button" role="menuitem">Reset map progress</button>
         </div>
@@ -923,8 +997,12 @@
                 <p id="map-arrival-copy">Choose Level 1 and your campus guide will walk there. You can play after they arrive.</p>
               </div>
               <div class="map-arrival-actions">
+                <button class="button secondary map-activity-button" type="button" id="wallet-map-open">🧩 Wallet <span id="wallet-count" class="activity-count">0/8</span></button>
+                <button class="button secondary map-activity-button" type="button" id="daily-quest-map-open">✅ Quests <span id="daily-quest-count" class="activity-count">0/3</span></button>
                 <button class="button gold" type="button" id="map-play-button" hidden>▶ &nbsp;Play Level 1</button>
                 <button class="button secondary" type="button" id="map-details-button" hidden>Learn about this building</button>
+                <button class="button secondary" type="button" id="treasure-search-button" hidden>🔎 Find hidden treasure</button>
+                <button class="button secondary" type="button" id="trivia-open-button" hidden>💬 Campus trivia</button>
               </div>
             </section>
           </div>
@@ -947,11 +1025,11 @@
           </article>
           <article class="info-card">
             <h2>Your toolbar</h2>
-            <p><strong>Use hint:</strong> reveals a random letter. You have three hints; solving a level restores them. <strong>Swap pictures:</strong> shuffles the clues and brings in a fresh set of related images. Tap a filled answer slot to remove an individual letter.</p>
+            <p><strong>Use hint:</strong> reveals a random letter. You can hold up to three hints; solving a level refills them. Find a building’s treasure or finish the daily quests to earn bonus hints. <strong>Swap pictures:</strong> shuffles the clues without changing the keyboard. Tap a filled answer slot to edit a guess.</p>
           </article>
           <article class="info-card">
             <h2>Unlock the map</h2>
-            <p>Solve each puzzle to reveal that building on the map. Levels unlock in order; select an unlocked building to travel there, play again, or learn more about it.</p>
+            <p>Solve each puzzle to reveal that building on the map and collect its campus map piece in your wallet. Levels unlock in order; select an unlocked building to travel there, play again, learn more, or answer its trivia. Find hidden treasure puzzles at buildings and complete three daily exploration quests for extra hints.</p>
           </article>
           <article class="info-card">
             <h2>Level 1</h2>
@@ -1012,6 +1090,15 @@
     </div>
   </div>
 
+  <div id="activity-modal" class="activity-modal" role="dialog" aria-modal="true" aria-labelledby="activity-modal-title" aria-hidden="true">
+    <div class="activity-card">
+      <button class="modal-close" type="button" id="activity-modal-close" aria-label="Close activity">×</button>
+      <p class="activity-eyebrow" id="activity-modal-eyebrow"></p>
+      <h2 id="activity-modal-title"></h2>
+      <div id="activity-modal-content"></div>
+    </div>
+  </div>
+
   <div id="win-modal" class="win-modal" role="dialog" aria-modal="true" aria-labelledby="win-title" aria-hidden="true">
     <div class="modal-card">
       <button class="modal-close" type="button" aria-label="Close level complete message">×</button>
@@ -1033,7 +1120,12 @@
       const legacyStorageKey = "u-pic-mcpherson-unlocked";
       const audioStorageKey = "u-pic-audio-settings";
       const tutorialStorageKey = "u-pic-first-play-guide-seen-v2";
+      const hintsStorageKey = "u-pic-hint-count-v1";
+      const treasuresStorageKey = "u-pic-hidden-treasures-v1";
+      const dailyQuestsStorageKey = "u-pic-daily-quests-v1";
       let unlockedLevels = new Set();
+      let foundTreasures = new Set();
+      let dailyQuestState = { date: "", visited: [], treasureFound: false, triviaAnswered: false, rewardClaimed: false };
       let levelSolved = false;
       let tutorialSeen = false;
       let audioPreferences = { effects: true, music: false };
@@ -1062,6 +1154,7 @@
       let keyboardSelections = [];
       let keyboardTiles = [];
       let displayedClues = [];
+      let correctPositionIndices = [];
       let selectedMapBuilding = null;
       let travelTimer = 0;
       let travelSequence = 0;
@@ -1172,6 +1265,115 @@
         }
       ];
 
+      const treasureData = {
+        mcpherson: { answer: "books", clues: [["📚", "Bookshelf"], ["📖", "Open pages"], ["📰", "Reading"], ["🔖", "Bookmark"]] },
+        cornett: { answer: "ideas", clues: [["💡", "Bright thought"], ["🧠", "Thinking"], ["💭", "A thought"], ["📝", "Brainstorm"]] },
+        strong: { answer: "learn", clues: [["🎓", "Graduation"], ["✏️", "Practice"], ["🏫", "Classroom"], ["📘", "A lesson"]] },
+        maclaurin: { answer: "class", clues: [["👩‍🏫", "Teacher"], ["🧑‍🎓", "Student"], ["📋", "Lesson plan"], ["🪑", "Classroom"]] },
+        ecss: { answer: "code", clues: [["💻", "Computer"], ["⌨️", "Keyboard"], ["🧩", "Logic"], ["🖥️", "Monitor"]] },
+        bob: { answer: "lab", clues: [["🧪", "Experiment"], ["🔬", "Microscope"], ["⚗️", "Glassware"], ["🥼", "Lab coat"]] },
+        jcc: { answer: "stage", clues: [["🎭", "Theatre"], ["🎤", "Microphone"], ["🎬", "Performance"], ["🎟️", "Show ticket"]] },
+        cle: { answer: "words", clues: [["🔤", "Alphabet"], ["💬", "Conversation"], ["📕", "Dictionary"], ["✉️", "Written message"]] }
+      };
+      const campusTrivia = {
+        mcpherson: { question: "What can students use the McPherson Library for?", choices: ["Research and study", "Only sports practice", "Only campus dining"], answer: 0, fact: "The library offers collections, research help, and spaces for individual and group study." },
+        cornett: { question: "What kind of learning is associated with Cornett?", choices: ["Humanities and social sciences", "Only engineering labs", "Only athletics"], answer: 0, fact: "Cornett hosts academic spaces used by humanities and social science departments." },
+        strong: { question: "What do students commonly do in the David Strong Building?", choices: ["Attend classes and work on coursework", "Borrow library books only", "Train for varsity sports"], answer: 0, fact: "David Strong provides academic and teaching spaces for student learning." },
+        maclaurin: { question: "Which area is closely associated with MacLaurin?", choices: ["Education", "Marine transportation", "Fine dining"], answer: 0, fact: "MacLaurin is closely associated with education and learning." },
+        ecss: { question: "What does ECSS stand for?", choices: ["Engineering and Computer Science", "Environmental Campus Student Services", "Education and Community Study Spaces"], answer: 0, fact: "ECSS is the Engineering and Computer Science building." },
+        bob: { question: "Which fields are connected with the Bob Wright Centre?", choices: ["Physics and astronomy", "Languages and literature", "Business and accounting"], answer: 0, fact: "The centre is part of UVic's science and research environment." },
+        jcc: { question: "What is the Jamie Cassels Centre often used for?", choices: ["University activities and gatherings", "Only laboratory experiments", "Only library borrowing"], answer: 0, fact: "The centre hosts a range of university activities and gatherings." },
+        cle: { question: "Which learning areas are associated with Clearihue?", choices: ["Languages and humanities", "Computer hardware repair", "Athletic coaching"], answer: 0, fact: "Clearihue supports humanities teaching, including language-related learning." }
+      };
+
+      function todayKey() {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+      }
+
+      function saveHintState() {
+        try {
+          localStorage.setItem(hintsStorageKey, String(hints));
+        } catch (error) {
+          console.warn("U-pic could not save the hint count; it will last for this session.", error);
+        }
+      }
+
+      function loadEngagementState() {
+        try {
+          const savedHintValue = localStorage.getItem(hintsStorageKey);
+          if (savedHintValue !== null) {
+            const savedHints = Number(savedHintValue);
+            if (Number.isInteger(savedHints) && savedHints >= 0 && savedHints <= 3) hints = savedHints;
+          }
+
+          const savedTreasures = JSON.parse(localStorage.getItem(treasuresStorageKey) || "[]");
+          if (Array.isArray(savedTreasures)) {
+            foundTreasures = new Set(savedTreasures.filter(id => buildings.some(building => building.id === id)));
+          }
+
+          const savedDaily = JSON.parse(localStorage.getItem(dailyQuestsStorageKey) || "null");
+          if (savedDaily && savedDaily.date === todayKey()) {
+            dailyQuestState = {
+              date: savedDaily.date,
+              visited: Array.isArray(savedDaily.visited) ? [...new Set(savedDaily.visited.filter(id => buildings.some(building => building.id === id)))] : [],
+              treasureFound: Boolean(savedDaily.treasureFound),
+              triviaAnswered: Boolean(savedDaily.triviaAnswered),
+              rewardClaimed: Boolean(savedDaily.rewardClaimed)
+            };
+          } else {
+            dailyQuestState = { date: todayKey(), visited: [], treasureFound: false, triviaAnswered: false, rewardClaimed: false };
+          }
+          saveEngagementState();
+        } catch (error) {
+          console.warn("U-pic could not load exploration progress; it will restart for this session.", error);
+        }
+      }
+
+      function saveEngagementState() {
+        try {
+          dailyQuestState.date = todayKey();
+          localStorage.setItem(treasuresStorageKey, JSON.stringify([...foundTreasures]));
+          localStorage.setItem(dailyQuestsStorageKey, JSON.stringify(dailyQuestState));
+        } catch (error) {
+          console.warn("U-pic could not save exploration progress.", error);
+        }
+      }
+
+      function refreshDailyQuestDay() {
+        if (dailyQuestState.date === todayKey()) return;
+        dailyQuestState = { date: todayKey(), visited: [], treasureFound: false, triviaAnswered: false, rewardClaimed: false };
+        saveEngagementState();
+      }
+
+      function dailyQuestTasks() {
+        refreshDailyQuestDay();
+        return [
+          { done: dailyQuestState.visited.length >= 2, text: `Visit two different buildings (${Math.min(2, dailyQuestState.visited.length)}/2)` },
+          { done: dailyQuestState.treasureFound, text: "Find a hidden campus treasure" },
+          { done: dailyQuestState.triviaAnswered, text: "Answer a campus trivia question correctly" }
+        ];
+      }
+
+      function updateEngagementDisplay() {
+        const tasks = dailyQuestTasks();
+        const completed = tasks.filter(task => task.done).length;
+        const questCount = document.getElementById("daily-quest-count");
+        const walletCount = document.getElementById("wallet-count");
+        if (questCount) questCount.textContent = `${completed}/3`;
+        if (walletCount) walletCount.textContent = `${unlockedLevels.size}/8`;
+        document.getElementById("map-count").textContent = `${unlockedLevels.size} / 8`;
+        saveEngagementState();
+      }
+
+      function recordBuildingVisit(building) {
+        refreshDailyQuestDay();
+        if (!dailyQuestState.visited.includes(building.id)) dailyQuestState.visited.push(building.id);
+        updateEngagementDisplay();
+      }
+
+      loadEngagementState();
+
       function saveProgress() {
         try {
           localStorage.setItem(progressStorageKey, JSON.stringify([...unlockedLevels].sort((a, b) => a - b)));
@@ -1224,7 +1426,7 @@
         activeBuilding = building;
         selectedMapBuilding = building;
         levelSolved = false;
-        hints = 3;
+        correctPositionIndices = [];
         userLetters = Array(answer().length).fill("");
         hintedLetters = Array(answer().length).fill("");
         keyboardSelections = Array(answer().length).fill(null);
@@ -1243,12 +1445,16 @@
         const copy = document.getElementById("map-arrival-copy");
         const playButton = document.getElementById("map-play-button");
         const detailsButton = document.getElementById("map-details-button");
+        const treasureButton = document.getElementById("treasure-search-button");
+        const triviaButton = document.getElementById("trivia-open-button");
         if (!building) {
           eyebrow.textContent = "Your campus adventure";
           title.textContent = "Ready to explore?";
           copy.textContent = "Choose Level 1 and your campus guide will walk there. You can play after they arrive.";
           playButton.hidden = true;
           detailsButton.hidden = true;
+          treasureButton.hidden = true;
+          triviaButton.hidden = true;
           return;
         }
         eyebrow.textContent = arrived ? `Level ${building.level}` : "On the way";
@@ -1260,6 +1466,11 @@
         playButton.hidden = !arrived;
         detailsButton.hidden = !arrived || !unlockedLevels.has(building.level);
         detailsButton.textContent = "Learn about this building";
+        treasureButton.hidden = !arrived;
+        treasureButton.textContent = foundTreasures.has(building.id) ? "✓ Treasure collected" : "🔎 Find hidden treasure";
+        triviaButton.hidden = !arrived;
+        triviaButton.textContent = unlockedLevels.has(building.level) ? "💬 Campus trivia" : "🔒 Campus trivia";
+        if (arrived) recordBuildingVisit(building);
       }
 
       function travelToBuilding(building) {
@@ -1374,12 +1585,14 @@
           const shown = hintedLetters[index] || userLetters[index];
           if (hintedLetters[index]) button.classList.add("hinted");
           else if (userLetters[index]) button.classList.add("filled");
+          if (correctPositionIndices.includes(index)) button.classList.add("correct-position");
           button.textContent = shown.toUpperCase();
           button.disabled = levelSolved || Boolean(hintedLetters[index]) || !userLetters[index];
           button.addEventListener("click", () => {
             if (!hintedLetters[index]) {
               userLetters[index] = "";
               keyboardSelections[index] = null;
+              correctPositionIndices = [];
               setStatus("", "");
               renderSlots();
               renderKeyboard();
@@ -1435,21 +1648,26 @@
       }
 
       function updateProgress() {
-        const count = unlockedLevels.size;
-        document.getElementById("map-count").textContent = `${count} / 8`;
+        updateEngagementDisplay();
       }
 
       function resetMapProgress() {
-        if (!window.confirm("Reset your map progress? All progress will be lost, and you will be able to play all levels again. This cannot be undone.")) return;
+        if (!window.confirm("Reset your map, collected pieces, treasures, hints, and daily quest progress? You will be able to play all levels again. This cannot be undone.")) return;
         try {
           localStorage.removeItem(progressStorageKey);
           localStorage.removeItem(legacyStorageKey);
+          localStorage.removeItem(hintsStorageKey);
+          localStorage.removeItem(treasuresStorageKey);
+          localStorage.removeItem(dailyQuestsStorageKey);
         } catch (error) {
           console.warn("U-pic could not clear saved progress; the map is reset for this session only.", error);
         }
         unlockedLevels.clear();
+        foundTreasures.clear();
+        dailyQuestState = { date: todayKey(), visited: [], treasureFound: false, triviaAnswered: false, rewardClaimed: false };
         levelSolved = false;
         hints = 3;
+        correctPositionIndices = [];
         activeBuilding = buildings[0];
         userLetters = Array(answer().length).fill("");
         hintedLetters = Array(answer().length).fill("");
@@ -1465,6 +1683,7 @@
         updateArrival(null);
         createKeyboard();
         renderPuzzle();
+        updateProgress();
         closeMenu();
         showPage("map");
       }
@@ -1591,6 +1810,7 @@
       }
 
       function resetEnteredLetters() {
+        correctPositionIndices = [];
         userLetters = Array(answer().length).fill("");
         keyboardSelections = hintedLetters.map(() => null);
         hintedLetters.forEach((letter, slot) => {
@@ -1614,6 +1834,8 @@
         userLetters[choice.index] = "";
         keyboardSelections[choice.index] = availableKey >= 0 ? availableKey : null;
         hints -= 1;
+        correctPositionIndices = [];
+        saveHintState();
         playTone(620);
         setStatus(`Letter ${choice.index + 1} revealed. Keep going!`, "");
         renderSlots();
@@ -1632,21 +1854,44 @@
           unlockedLevels.add(activeBuilding.level);
           levelSolved = true;
           hints = 3;
+          correctPositionIndices = [];
+          saveHintState();
           playTone(880, 0.3);
           saveProgress();
+          updateProgress();
           renderPuzzle();
           renderMap();
           selectedMapBuilding = activeBuilding;
           updateArrival(activeBuilding, true);
           document.getElementById("win-title").textContent = `Level ${activeBuilding.level} complete!`;
-          document.getElementById("win-copy").textContent = `You solved the puzzle and unlocked ${activeBuilding.name} on your campus map. Your three hints have been replenished.`;
+          document.getElementById("win-copy").textContent = `You solved the puzzle and unlocked ${activeBuilding.name} on your campus map. You also collected its map piece, and your hints are back to 3.`;
           const nextButton = document.getElementById("win-next-button");
           nextButton.hidden = activeBuilding.level === buildings.length;
           nextButton.textContent = `Play Level ${activeBuilding.level + 1}`;
           openModal(winModal);
         } else {
-          resetEnteredLetters();
-          setStatus("Not quite — your letters are cleared. Try another combination.", "error");
+          const relatedGuesses = {
+            reading: ["library", "studies"],
+            mind: ["idea"],
+            study: ["learn"],
+            teach: ["learn"],
+            coding: ["script"],
+            science: ["biology"],
+            events: ["gather"],
+            language: ["dialects"]
+          };
+          const correctPositions = [...solution].reduce((count, letter, index) => count + Number(guess[index] === letter), 0);
+          if ((relatedGuesses[solution] || []).includes(guess)) {
+            correctPositionIndices = [];
+            setStatus("Good thinking — that word is related. Tap a letter to edit your guess.", "near-miss");
+          } else if (correctPositions >= Math.ceil(solution.length / 2)) {
+            correctPositionIndices = [...solution].map((letter, index) => guess[index] === letter ? index : -1).filter(index => index !== -1);
+            setStatus(`So close! ${correctPositions} of ${solution.length} letters are in the right spot. Tap a letter to adjust your guess.`, "near-miss");
+          } else {
+            correctPositionIndices = [];
+            setStatus("Not quite — tap a letter to change your guess, or use a hint.", "error");
+          }
+          renderSlots();
           const shell = document.querySelector("#game-page .game-shell");
           shell.classList.remove("wrong-answer");
           window.requestAnimationFrame(() => shell.classList.add("wrong-answer"));
@@ -1687,6 +1932,239 @@
         openModal(buildingModal);
       }
 
+      function openActivityModal(title, eyebrow, content) {
+        document.getElementById("activity-modal-title").textContent = title;
+        document.getElementById("activity-modal-eyebrow").textContent = eyebrow;
+        document.getElementById("activity-modal-content").replaceChildren(content);
+        const modal = document.getElementById("activity-modal");
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.getElementById("activity-modal-close").focus();
+      }
+
+      function closeActivityModal() {
+        const modal = document.getElementById("activity-modal");
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+      }
+
+      function activityText(tag, className, text) {
+        const element = document.createElement(tag);
+        element.className = className;
+        element.textContent = text;
+        return element;
+      }
+
+      function openWallet() {
+        const content = document.createElement("div");
+        content.append(activityText("p", "activity-intro", "Solve each level to collect that building’s map piece. Your collection and hint pouch are saved in this browser."));
+        const pieces = document.createElement("div");
+        pieces.className = "wallet-grid";
+        buildings.forEach(building => {
+          const collected = unlockedLevels.has(building.level);
+          const piece = document.createElement("div");
+          piece.className = `wallet-piece${collected ? " collected" : ""}`;
+          piece.setAttribute("aria-label", collected ? `Collected: ${building.name}` : `Locked: Level ${building.level}`);
+          piece.append(
+            activityText("span", "wallet-piece-icon", collected ? building.icon : "🔒"),
+            activityText("span", "wallet-piece-name", collected ? building.name : `Level ${building.level}`)
+          );
+          pieces.append(piece);
+        });
+        const stats = activityText("div", "activity-stat", "");
+        stats.append(
+          activityText("span", "", `Map pieces: ${unlockedLevels.size}/8`),
+          activityText("span", "", `Discovery hints available: ${hints}/3`)
+        );
+        content.append(pieces, stats);
+        openActivityModal("Campus Wallet", `${unlockedLevels.size} of 8 map pieces`, content);
+      }
+
+      function openDailyQuests() {
+        const tasks = dailyQuestTasks();
+        const completed = tasks.filter(task => task.done).length;
+        const content = document.createElement("div");
+        content.append(activityText("p", "activity-intro", "Complete these three campus activities today to claim one extra hint. Your checklist refreshes each day."));
+        const list = document.createElement("ul");
+        list.className = "quest-list";
+        tasks.forEach(task => {
+          const item = activityText("li", task.done ? "done" : "", `${task.done ? "✓" : "○"}  ${task.text}`);
+          list.append(item);
+        });
+        const progress = activityText("div", "activity-stat", `${completed}/3 activities complete`);
+        const feedback = activityText("p", "activity-feedback", dailyQuestState.rewardClaimed
+          ? "You have claimed today’s hint reward."
+          : "Choose buildings on the map, find a treasure, and answer trivia to finish the checklist.");
+        const claim = activityText("button", "button gold activity-action", dailyQuestState.rewardClaimed ? "Daily reward claimed" : "Claim daily reward (+1 hint)");
+        claim.type = "button";
+        claim.disabled = completed < 3 || dailyQuestState.rewardClaimed;
+        claim.addEventListener("click", () => claimDailyQuestReward(feedback, claim));
+        content.append(list, progress, feedback, claim);
+        openActivityModal("Daily exploration quests", "Refreshes every day", content);
+      }
+
+      function claimDailyQuestReward(feedback, claim) {
+        if (dailyQuestTasks().some(task => !task.done) || dailyQuestState.rewardClaimed) return;
+        if (hints >= 3) {
+          feedback.textContent = "Your hint pouch is full. Spend a hint, then claim this reward before the day ends.";
+          return;
+        }
+        hints += 1;
+        dailyQuestState.rewardClaimed = true;
+        saveHintState();
+        saveEngagementState();
+        renderPuzzle();
+        updateProgress();
+        feedback.textContent = `Daily reward claimed! You now have ${hints}/3 hints.`;
+        claim.textContent = "Daily reward claimed";
+        claim.disabled = true;
+      }
+
+      function openTreasurePuzzle() {
+        const building = selectedMapBuilding;
+        if (!building) {
+          openActivityModal("Hidden treasures", "Explore the map", activityText("p", "activity-intro", "Choose a building on the campus map, travel there, and start its four-picture treasure puzzle."));
+          return;
+        }
+        if (foundTreasures.has(building.id)) {
+          openActivityModal("Treasure collected!", building.name, activityText("p", "activity-intro", "You already found this building’s hidden treasure. Each building has one unique bonus puzzle."));
+          return;
+        }
+        const treasure = treasureData[building.id];
+        const solution = treasure.answer;
+        let entry = Array(solution.length).fill("");
+        let selections = Array(solution.length).fill(null);
+        const content = document.createElement("div");
+        content.append(activityText("p", "activity-intro", `A bonus word puzzle for ${building.name}. Solve it to collect the hidden treasure and earn one hint (up to 3 total).`));
+        const clues = document.createElement("div");
+        clues.className = "treasure-clues";
+        treasure.clues.forEach(([icon, caption]) => {
+          const card = document.createElement("div");
+          card.className = "treasure-clue";
+          card.setAttribute("role", "img");
+          card.setAttribute("aria-label", caption);
+          card.append(activityText("span", "", icon), activityText("span", "", caption));
+          clues.append(card);
+        });
+        const slots = document.createElement("div");
+        slots.className = "treasure-slots";
+        const keyboardNode = document.createElement("div");
+        keyboardNode.className = "treasure-keyboard";
+        keyboardNode.setAttribute("role", "group");
+        keyboardNode.setAttribute("aria-label", "Treasure answer letters");
+        const feedback = activityText("p", "activity-feedback", "Tap letters to fill the answer. Tap a filled slot to change it.");
+        feedback.setAttribute("aria-live", "polite");
+        const answerKeys = solution.split("");
+        const decoys = shuffled([...new Set([..."abcdefghijklmnopqrstuvwxyz"].filter(letter => !answerKeys.includes(letter)))]).slice(0, 4);
+        const keyLetters = shuffled([...answerKeys, ...decoys]);
+        const checkButton = activityText("button", "button gold activity-action", "Check treasure");
+        checkButton.type = "button";
+
+        const checkTreasure = () => {
+          if (entry.some(letter => !letter)) {
+            feedback.textContent = "Fill every answer slot first.";
+            return;
+          }
+          if (entry.join("") !== solution) {
+            feedback.textContent = "Not quite. Tap a letter to edit your answer and try again.";
+            return;
+          }
+          foundTreasures.add(building.id);
+          refreshDailyQuestDay();
+          dailyQuestState.treasureFound = true;
+          const earnedHint = hints < 3;
+          if (earnedHint) hints += 1;
+          saveHintState();
+          saveEngagementState();
+          updateProgress();
+          if (document.getElementById("game-page").classList.contains("active")) renderPuzzle();
+          updateArrival(building, true);
+          feedback.textContent = earnedHint
+            ? `Treasure found! You earned one hint (${hints}/3).`
+            : "Treasure found! Your hint pouch is full, but this treasure counts toward today’s quests.";
+          slots.querySelectorAll("button").forEach(button => { button.disabled = true; });
+          keyboardNode.querySelectorAll("button").forEach(button => { button.disabled = true; });
+          checkButton.disabled = true;
+          checkButton.textContent = "✓ Treasure collected";
+        };
+
+        const renderTreasureEntry = () => {
+          slots.replaceChildren();
+          entry.forEach((letter, index) => {
+            const slot = activityText("button", `treasure-slot${letter ? " filled" : ""}`, letter.toUpperCase());
+            slot.type = "button";
+            slot.setAttribute("aria-label", letter ? `Remove letter ${letter}` : "Empty answer slot");
+            slot.addEventListener("click", () => {
+              if (!entry[index]) return;
+              entry[index] = "";
+              selections[index] = null;
+              feedback.textContent = "Tap a letter to fill the empty slot.";
+              renderTreasureEntry();
+            });
+            slots.append(slot);
+          });
+          keyboardNode.replaceChildren();
+          keyLetters.forEach((letter, keyIndex) => {
+            const key = activityText("button", "treasure-key", letter.toUpperCase());
+            key.type = "button";
+            key.disabled = selections.includes(keyIndex) || entry.every(Boolean);
+            key.setAttribute("aria-label", `Choose letter ${letter.toUpperCase()}`);
+            key.addEventListener("click", () => {
+              const nextSlot = entry.findIndex((value, index) => !value && selections[index] === null);
+              if (nextSlot < 0) return;
+              entry[nextSlot] = letter;
+              selections[nextSlot] = keyIndex;
+              feedback.textContent = "";
+              renderTreasureEntry();
+            });
+            keyboardNode.append(key);
+          });
+        };
+        checkButton.addEventListener("click", checkTreasure);
+        content.append(clues, slots, keyboardNode, checkButton, feedback);
+        openActivityModal(`Hidden treasure: ${building.name}`, "4 pictures · 1 word", content);
+        renderTreasureEntry();
+      }
+
+      function openTrivia() {
+        const building = selectedMapBuilding;
+        if (!building) {
+          openActivityModal("Campus trivia", "Explore the map", activityText("p", "activity-intro", "Choose a building on the map to open its trivia question. Trivia becomes available after solving its main puzzle."));
+          return;
+        }
+        if (!unlockedLevels.has(building.level)) {
+          openActivityModal("Campus trivia locked", `Solve Level ${building.level} first`, activityText("p", "activity-intro", `Solve the main picture puzzle for ${building.name} to unlock its building details and trivia.`));
+          return;
+        }
+        const trivia = campusTrivia[building.id];
+        const content = document.createElement("div");
+        content.append(activityText("p", "activity-intro", trivia.question));
+        const choices = document.createElement("div");
+        choices.className = "trivia-choices";
+        const feedback = activityText("p", "activity-feedback", "");
+        feedback.setAttribute("aria-live", "polite");
+        trivia.choices.forEach((choice, index) => {
+          const button = activityText("button", "trivia-choice", choice);
+          button.type = "button";
+          button.addEventListener("click", () => {
+            if (index === trivia.answer) {
+              refreshDailyQuestDay();
+              dailyQuestState.triviaAnswered = true;
+              saveEngagementState();
+              updateProgress();
+              feedback.textContent = `Correct! ${trivia.fact}`;
+              feedback.className = "activity-feedback";
+              choices.querySelectorAll("button").forEach(option => { option.disabled = true; });
+            } else {
+              feedback.textContent = "Not quite — give it another try.";
+            }
+          });
+          choices.append(button);
+        });
+        content.append(choices, feedback);
+        openActivityModal("Campus trivia", building.name, content);
+      }
+
       document.querySelectorAll("[data-page]").forEach(button => {
         button.addEventListener("click", () => showPage(button.dataset.page));
       });
@@ -1709,6 +2187,30 @@
         closeMenu();
         updateAudioSettings();
         openModal(settingsModal);
+      });
+      document.getElementById("wallet-open").addEventListener("click", () => {
+        closeMenu();
+        openWallet();
+      });
+      document.getElementById("wallet-map-open").addEventListener("click", openWallet);
+      document.getElementById("daily-quest-open").addEventListener("click", () => {
+        closeMenu();
+        openDailyQuests();
+      });
+      document.getElementById("daily-quest-map-open").addEventListener("click", openDailyQuests);
+      document.getElementById("treasure-open").addEventListener("click", () => {
+        closeMenu();
+        openTreasurePuzzle();
+      });
+      document.getElementById("trivia-open").addEventListener("click", () => {
+        closeMenu();
+        openTrivia();
+      });
+      document.getElementById("treasure-search-button").addEventListener("click", openTreasurePuzzle);
+      document.getElementById("trivia-open-button").addEventListener("click", openTrivia);
+      document.getElementById("activity-modal-close").addEventListener("click", closeActivityModal);
+      document.getElementById("activity-modal").addEventListener("click", event => {
+        if (event.target.id === "activity-modal") closeActivityModal();
       });
       document.getElementById("reset-map").addEventListener("click", resetMapProgress);
       document.getElementById("game-help-button").addEventListener("click", () => startTutorialTour(true));
@@ -1772,7 +2274,7 @@
         if (selectedMapBuilding && unlockedLevels.has(selectedMapBuilding.level)) openBuilding(selectedMapBuilding);
       });
       document.getElementById("modal-done").addEventListener("click", () => closeModal(buildingModal));
-      document.querySelectorAll(".modal-close").forEach(button => {
+      document.querySelectorAll(".building-modal .modal-close, .win-modal .modal-close").forEach(button => {
         button.addEventListener("click", () => closeModal(button.closest(".building-modal, .win-modal")));
       });
       [buildingModal, winModal, settingsModal].forEach(modal => {
@@ -1785,10 +2287,11 @@
           closeModal(buildingModal);
           closeModal(winModal);
           closeModal(settingsModal);
+          closeActivityModal();
           closeMenu();
           if (tourBackdrop.classList.contains("open")) finishTutorialTour();
         }
-        if (buildingModal.classList.contains("open") || winModal.classList.contains("open") || settingsModal.classList.contains("open") || tourBackdrop.classList.contains("open")) return;
+        if (buildingModal.classList.contains("open") || winModal.classList.contains("open") || settingsModal.classList.contains("open") || document.getElementById("activity-modal").classList.contains("open") || tourBackdrop.classList.contains("open")) return;
       });
 
       activeBuilding = buildings[0];
